@@ -10,3 +10,23 @@
 export interface DemoResponse {
   message: string;
 }
+
+// Auth types
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginSuccessResponse {
+  token: string;
+  user?: {
+    email: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
+export interface LoginErrorResponse {
+  error: string;
+  details?: unknown;
+}
