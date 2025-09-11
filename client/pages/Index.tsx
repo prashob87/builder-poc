@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useToast } from "@/hooks/use-toast";
 
 // Simple email validation regex
 const isValidEmail = (email: string): boolean => {
@@ -16,6 +17,8 @@ export default function Index() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [attemptedLogin, setAttemptedLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const showSpinner = email.length >= 2 && !isValidEmail(email);
@@ -92,10 +95,41 @@ export default function Index() {
 
         {/* Right Section - Login Form */}
         <div className="w-[500px]">
-          <form className="flex flex-col justify-between" onSubmit={(e) => {
+          <form className="flex flex-col justify-between" onSubmit={async (e) => {
             e.preventDefault();
-            setAttemptedLogin(true);
-            // Always fail password validation on this screen to drive Forgot Password flow
+            if (!canAttemptLogin || loading) return;
+            setLoading(true);
+            setAttemptedLogin(false);
+            try {
+              const resp = await fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              });
+
+              if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                setAttemptedLogin(true);
+                toast({
+                  title: "Login failed",
+                  description: typeof err?.error === "string" ? err.error : "Please check your credentials and try again.",
+                  variant: "destructive",
+                });
+                return;
+              }
+
+              const data = await resp.json().catch(() => ({}));
+              const token = (data && data.token) || "";
+              if (token) {
+                try { localStorage.setItem("auth_token", token); } catch {}
+              }
+              toast({ title: "Welcome", description: "Successfully signed in." });
+              navigate("/assign-warranty");
+            } catch (err) {
+              toast({ title: "Network error", description: "Unable to reach the server.", variant: "destructive" });
+            } finally {
+              setLoading(false);
+            }
           }}>
           <div className="flex flex-col gap-9">
             <div className="flex flex-col gap-8">
@@ -224,9 +258,9 @@ export default function Index() {
                   ? 'bg-[#F9CB3A] text-black border-transparent cursor-pointer shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] hover:border-[#F2F2F2] hover:shadow-[0_4px_6.3px_2px_rgba(0,0,0,0.15)] active:border-[#F2F2F2] active:shadow-[1px_1px_4.2px_1px_rgba(0,0,0,0.15)_inset]'
                   : 'bg-[rgba(249,203,58,0.56)] text-[rgba(0,0,0,0.5)] border-transparent cursor-not-allowed'
               }`}
-              disabled={!canAttemptLogin}
+              disabled={!canAttemptLogin || loading}
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
             <div className="flex gap-10">
               <div className="flex-1"></div>
