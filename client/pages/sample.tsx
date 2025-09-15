@@ -8,7 +8,9 @@ export default function Sample() {
       <main className="flex-1">
         <div className="max-w-[1260px] mx-auto px-4 py-10">
           <h1 className="text-2xl font-bold">Sample Page</h1>
-          <p className="text-muted-foreground mt-2">This is a sample page under client/pages/sample.tsx.</p>
+          <p className="text-muted-foreground mt-2">
+            This is a sample page under client/pages/sample.tsx.
+          </p>
         </div>
       </main>
       <Footer />
