@@ -246,67 +246,6 @@ export default function AccountData() {
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
                 
-                {/* Log in data */}
-                <div className="border border-gray-200 rounded-lg p-6 flex flex-col gap-5">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-black text-2xl font-bold font-[Arial] text-blue-700">Login Credentials</h3>
-                    <button
-                      type="button"
-                      aria-expanded={loginOpen}
-                      onClick={() => setLoginOpen((v) => !v)}
-                      aria-label="Toggle login credentials"
-                      className="p-1 rounded hover:bg-gray-100"
-                    >
-                      <svg className={`w-6 h-6 transition-transform ${loginOpen ? 'rotate-180' : ''}`} viewBox="0 0 25 25" fill="none">
-                        <path d="M6.83203 9.34058L12.832 15.3406L18.832 9.34058" stroke="#969C9F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </button>
-                  </div>
-
-                  {loginOpen && (
-                  <div className="flex gap-5">
-                    {/* Email Address */}
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-semibold font-[Arial] leading-6">Email Address*</label>
-                      <div className="h-11 px-3 py-6 bg-white border-2 border-gray-300 rounded-lg flex items-center transition-all hover:border-blue-300">
-                        <span className="text-[#969C9F] text-base font-[Arial]">anna.gallagher@domain.com</span>
-                      </div>
-                    </div>
-
-                    {/* New Password */}
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-semibold font-[Arial] leading-6">New Password*</label>
-                      <div className="h-11 px-3 py-6 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-between transition-all hover:border-blue-300">
-                        <input
-                          type={showNewPassword ? "text" : "password"}
-                          value={newPassword}
-                          onChange={(e) => setNewPassword(e.target.value)}
-                          className="flex-1 text-base text-black font-[Arial] outline-none bg-transparent"
-                        />
-                        <button
-                          type="button"
-                          aria-label={showNewPassword ? "Hide password" : "Show password"}
-                          onClick={() => setShowNewPassword((v) => !v)}
-                          className="text-panasonic-blue hover:text-panasonic-blue/90 focus:outline-none focus:ring-2 focus:ring-panasonic-blue rounded p-1"
-                        >
-                          {showNewPassword ? (
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          ) : (
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  )}
-                </div>
-
                 {/* Company Representative Section */}
                 <div className="border border-gray-200 rounded-lg p-6 flex flex-col gap-5">
                   <h3 className="text-black text-2xl font-bold font-[Arial] text-blue-700">Company Representative</h3>
