@@ -160,6 +160,57 @@ export default function AccountData() {
                       </div>
                     </div>
 
+                    {/* Phone Number */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-black text-sm font-semibold font-[Arial]">Phone Number*</label>
+                      <input
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                        disabled={vatSaved}
+                        readOnly={vatSaved}
+                        className={`h-10 px-3 py-2 border-2 rounded-lg bg-white text-black text-sm font-[Arial] outline-none w-full transition-all ${
+                          vatSaved ? 'border-gray-300 cursor-not-allowed opacity-75' : 'border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                        }`}
+                        placeholder="e.g. +48 501234567"
+                      />
+                    </div>
+
+                    {/* Address */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-black text-sm font-semibold font-[Arial]">Address*</label>
+                      <textarea
+                        value={`${formData.street} ${formData.number}\n${formData.zipCode} ${formData.city}`}
+                        onChange={(e) => {
+                          const lines = e.target.value.split('\n');
+                          const firstLine = lines[0] || '';
+                          const secondLine = lines[1] || '';
+
+                          // Parse first line as street and number
+                          const streetParts = firstLine.trim().split(' ');
+                          const number = streetParts.pop() || '';
+                          const street = streetParts.join(' ');
+
+                          // Parse second line as zip and city
+                          const addressParts = secondLine.trim().split(' ');
+                          const zipCode = addressParts[0] || '';
+                          const city = addressParts.slice(1).join(' ');
+
+                          handleInputChange('street', street);
+                          handleInputChange('number', number);
+                          handleInputChange('zipCode', zipCode);
+                          handleInputChange('city', city);
+                        }}
+                        disabled={vatSaved}
+                        readOnly={vatSaved}
+                        rows={2}
+                        className={`px-3 py-2 border-2 rounded-lg bg-white text-black text-sm font-[Arial] outline-none w-full resize-none transition-all ${
+                          vatSaved ? 'border-gray-300 cursor-not-allowed opacity-75' : 'border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                        }`}
+                        placeholder="Street Number&#10;ZIP Code City"
+                      />
+                    </div>
+
                     {/* Save Button */}
                     <button
                       type="submit"
@@ -172,7 +223,7 @@ export default function AccountData() {
                       style={!vatSaved && !isVatValid ? { backgroundColor: 'rgba(249, 203, 58, 0.5)' } : {}}
                       disabled={vatSaved || !isVatValid}
                     >
-                      {vatSaved ? 'Saved' : isVatValid ? 'Save VAT' : 'Enter VAT to Save'}
+                      {vatSaved ? 'Saved' : isVatValid ? 'Save' : 'Enter VAT to Save'}
                     </button>
                     {vatSaved && (
                       <p className="text-xs text-black font-[Arial] mt-2">
