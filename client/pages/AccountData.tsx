@@ -36,9 +36,6 @@ export default function AccountData() {
     }
   };
 
-  const [newPassword, setNewPassword] = useState("");
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
 
 
 
