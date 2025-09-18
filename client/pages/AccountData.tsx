@@ -199,10 +199,6 @@ export default function AccountData() {
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Phone</span>
                       <span className="text-black text-base font-[Arial]">+353 1 234 5678</span>
                     </div>
-                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
-                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Address</span>
-                      <span className="text-black text-base font-[Arial]">12 Cedar Lane, Rathmines<br />11-12345 Warsaw, Poland</span>
-                    </div>
                   </div>
                 </div>
 
@@ -215,14 +211,6 @@ export default function AccountData() {
                     <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Company</span>
                       <span className="text-black text-base font-bold font-[Arial]">Installation Corp. Inc.</span>
-                    </div>
-                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
-                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Company ID</span>
-                      <span className="text-black text-base font-[Arial]">1234567890</span>
-                    </div>
-                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
-                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Contact Person</span>
-                      <span className="text-black text-base font-[Arial]">Anna Gallagher</span>
                     </div>
                   </div>
                 </div>
