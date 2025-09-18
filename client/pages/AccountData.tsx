@@ -284,47 +284,34 @@ export default function AccountData() {
                   <h3 className="text-black text-2xl font-bold font-[Arial]">Address data</h3>
 
                   {/* Address */}
-                  <div className="flex gap-5">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">Street*</label>
-                      <input
-                        type="text"
-                        value={formData.street}
-                        onChange={(e) => handleInputChange('street', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">Number*</label>
-                      <input
-                        type="text"
-                        value={formData.number}
-                        onChange={(e) => handleInputChange('number', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-black text-base font-[Arial] leading-6">Address*</label>
+                    <textarea
+                      value={`${formData.street} ${formData.number}\n${formData.zipCode} ${formData.city}`}
+                      onChange={(e) => {
+                        const lines = e.target.value.split('\n');
+                        const firstLine = lines[0] || '';
+                        const secondLine = lines[1] || '';
 
-                  {/* ZIP, City */}
-                  <div className="flex gap-5">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">ZIP Code*</label>
-                      <input
-                        type="text"
-                        value={formData.zipCode}
-                        onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">City*</label>
-                      <input
-                        type="text"
-                        value={formData.city}
-                        onChange={(e) => handleInputChange('city', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
+                        // Parse first line as street and number
+                        const streetParts = firstLine.trim().split(' ');
+                        const number = streetParts.pop() || '';
+                        const street = streetParts.join(' ');
+
+                        // Parse second line as zip and city
+                        const addressParts = secondLine.trim().split(' ');
+                        const zipCode = addressParts[0] || '';
+                        const city = addressParts.slice(1).join(' ');
+
+                        handleInputChange('street', street);
+                        handleInputChange('number', number);
+                        handleInputChange('zipCode', zipCode);
+                        handleInputChange('city', city);
+                      }}
+                      rows={2}
+                      className="px-3 py-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none resize-none"
+                      placeholder="Street Number&#10;ZIP Code City"
+                    />
                   </div>
 
                   {/* Country and Phone */}
