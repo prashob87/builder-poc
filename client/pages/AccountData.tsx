@@ -272,6 +272,10 @@ export default function AccountData() {
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Company</span>
                       <span className="text-black text-base font-bold font-[Arial]">Installation Corp. Inc.</span>
                     </div>
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">VAT Number</span>
+                      <span className="text-black text-base font-[Arial]">DE 123456789</span>
+                    </div>
                   </div>
                 </div>
               </div>
