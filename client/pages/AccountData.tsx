@@ -240,12 +240,24 @@ export default function AccountData() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">First Name</span>
+                      <span className="text-black text-base font-[Arial]">Anna</span>
+                    </div>
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Last Name</span>
+                      <span className="text-black text-base font-[Arial]">Gallagher</span>
+                    </div>
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Email</span>
                       <span className="text-black text-base font-[Arial]">gallagher@domain.com</span>
                     </div>
                     <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Phone</span>
                       <span className="text-black text-base font-[Arial]">+353 1 234 5678</span>
+                    </div>
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Address</span>
+                      <span className="text-black text-base font-[Arial]">12 Cedar Lane, Rathmines<br />11-12345 Warsaw, Poland</span>
                     </div>
                   </div>
                 </div>
