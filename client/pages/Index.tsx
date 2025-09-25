@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import "../styles/auth.css";
 
 // Simple email validation regex
 const isValidEmail = (email: string): boolean => {
@@ -35,58 +35,56 @@ export default function Index() {
   const canAttemptLogin = isEmailValid && password.length > 0;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="auth-page">
       <Header activeTab="purchase" showUserActions cartBadgeCount={6} />
 
       {/* Main Content */}
-      <main className="flex-1 flex justify-center items-stretch px-[90px] py-7 gap-20">
+      <main className="auth-main">
         {/* Left Section - Welcome */}
-        <div className="w-[500px] bg-panasonic-blue p-8 flex flex-col gap-10">
+        <div className="auth-panel">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <h1 className="text-white text-2xl font-bold font-[Arial]">
-                Aquarea Service+
-              </h1>
-              <h2 className="text-white text-5xl font-normal font-[Arial] leading-tight">
+              <h1 className="auth-panel-title">Aquarea Service+</h1>
+              <h2 className="auth-panel-subtitle">
                 Zapraszamy do sklepu z rozszerzoną gwarancją
               </h2>
             </div>
-            <div className="text-white text-xl font-normal font-[Arial] leading-[28px] space-y-4">
-              <div className="bg-white/10 rounded-lg p-4 space-y-3">
-                <h3 className="text-white text-xl font-bold font-[Arial] mb-3">Getting Started:</h3>
+            <div className="auth-getting-started">
+              <div className="auth-getting-started-card">
+                <h3 className="auth-getting-started-title">Getting Started:</h3>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-panasonic-blue font-bold text-sm">1</span>
+                <div className="auth-step">
+                  <div className="auth-step-bullet">
+                    <span className="auth-step-bullet-text">1</span>
                   </div>
-                  <p className="text-white">
+                  <p className="auth-step-text">
                     <strong>Already a ProClub member?</strong><br />
                     Log in with your ProClub credentials below
                   </p>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-panasonic-blue font-bold text-sm">2</span>
+                <div className="auth-step">
+                  <div className="auth-step-bullet">
+                    <span className="auth-step-bullet-text">2</span>
                   </div>
-                  <p className="text-white">
+                  <p className="auth-step-text">
                     <strong>New to ProClub?</strong><br />
                     Register as a new reseller first, then return to log in
                   </p>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-panasonic-blue font-bold text-sm">3</span>
+                <div className="auth-step">
+                  <div className="auth-step-bullet">
+                    <span className="auth-step-bullet-text">3</span>
                   </div>
-                  <p className="text-white">
+                  <p className="auth-step-text">
                     <strong>After logging in:</strong><br />
                     Access products, manage customers, and initiate billing
                   </p>
                 </div>
               </div>
 
-              <p className="text-center text-lg italic opacity-90">
+              <p className="auth-disclaimer">
                 This is a closed store for authorized resellers only
               </p>
             </div>
@@ -94,8 +92,8 @@ export default function Index() {
         </div>
 
         {/* Right Section - Login Form */}
-        <div className="w-[500px]">
-          <form className="flex flex-col justify-between" onSubmit={async (e) => {
+        <div className="auth-form-wrapper">
+          <form className="auth-form" onSubmit={async (e) => {
             e.preventDefault();
             if (!canAttemptLogin || loading) return;
             setLoading(true);
@@ -131,27 +129,25 @@ export default function Index() {
               setLoading(false);
             }
           }}>
-          <div className="flex flex-col gap-9">
-            <div className="flex flex-col gap-8">
-              <h1 className="text-black text-4xl font-bold font-[Arial]">Login</h1>
-              <p className="text-black text-base font-normal font-[Arial] leading-6">
+          <div className="auth-section">
+            <div className="auth-header">
+              <h1 className="auth-form-title">Login</h1>
+              <p className="auth-form-subtitle">
                 Please login with your PRO Club credentials. In case of any difficulties, please use the link forgot password
               </p>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="form-fields">
             {/* Email Input */}
-            <div className="flex flex-col gap-2">
-              <label className="text-black text-base font-normal font-[Arial] leading-6">
-                Email Address
-              </label>
-              <div className="h-11 px-3 py-6 border border-black rounded bg-white flex items-center gap-3">
+            <div className="form-field">
+              <label className="form-label">Email Address</label>
+              <div className="input-wrapper">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="user@domain.com"
-                  className="flex-1 text-base text-black font-[Arial] outline-none bg-transparent placeholder:text-[#969C9F]"
+                  className="text-input placeholder:text-[#969C9F]"
                 />
                 {showSpinner && (
                   <div className="flex-shrink-0">
@@ -197,23 +193,21 @@ export default function Index() {
             </div>
 
             {/* Password Field */}
-            <div className="flex flex-col gap-2">
-              <label className="text-black text-base font-normal font-[Arial] leading-6">
-                Password
-              </label>
-              <div className={`h-11 px-3 py-6 border rounded bg-white flex items-center gap-3 ${attemptedLogin ? 'border-red-500' : 'border-black'}`}>
+            <div className="form-field">
+              <label className="form-label">Password</label>
+              <div className={`${attemptedLogin ? 'input-wrapper-error' : 'input-wrapper'}`}>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  className="flex-1 text-base text-black font-[Arial] outline-none bg-transparent"
+                  className="text-input"
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   onClick={() => setShowPassword((v) => !v)}
-                  className="flex-shrink-0 text-panasonic-blue hover:text-panasonic-blue/90 focus:outline-none focus:ring-2 focus:ring-panasonic-blue rounded p-1"
+                  className="password-toggle"
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
@@ -229,46 +223,42 @@ export default function Index() {
                 </button>
               </div>
               {attemptedLogin && (
-                <p className="text-xs text-red-600 font-[Arial]">Incorrect password. Please use Forgot Password to reset.</p>
+                <p className="helper-error">Incorrect password. Please use Forgot Password to reset.</p>
               )}
-              <p className="text-xs text-panasonic-text-gray font-[Arial]">
+              <p className="helper-muted">
                 If your ProClub password does not work, please click on the Forgot Password link
               </p>
             </div>
-            
+
               {/* Forgot Login Link */}
               <div className="flex justify-end mt-2">
                 <button
                   type="button"
                   onClick={() => navigate('/forgot-password')}
-                  className="text-panasonic-blue text-sm font-semibold underline underline-offset-2 font-[Arial] leading-6 hover:text-panasonic-blue/90 focus:outline-none focus:ring-2 focus:ring-panasonic-blue rounded px-1"
+                  className="link-blue"
                 >
                   Forgot Password
                 </button>
               </div>
             </div>
           </div>
-          
+
           {/* Login Button and Register Link */}
           <div className="flex flex-col gap-1.5">
             <button
               type="submit"
-              className={`w-full h-12 font-bold text-[17px] leading-[17px] rounded-lg border transition-all duration-200 ${
-                canAttemptLogin
-                  ? 'bg-[#F9CB3A] text-black border-transparent cursor-pointer shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] hover:border-[#F2F2F2] hover:shadow-[0_4px_6.3px_2px_rgba(0,0,0,0.15)] active:border-[#F2F2F2] active:shadow-[1px_1px_4.2px_1px_rgba(0,0,0,0.15)_inset]'
-                  : 'bg-[rgba(249,203,58,0.56)] text-[rgba(0,0,0,0.5)] border-transparent cursor-not-allowed'
-              }`}
+              className={canAttemptLogin ? 'login-button' : 'login-button-disabled'}
               disabled={!canAttemptLogin || loading}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-            <div className="flex gap-10">
-              <div className="flex-1"></div>
-              <div className="flex-1 flex justify-end">
+            <div className="login-links">
+              <div className="spacer-grow"></div>
+              <div className="right-justified">
                 <button
                   type="button"
                   onClick={() => navigate('/account-data')}
-                  className="text-black text-xs underline font-[Arial] leading-6 hover:text-panasonic-blue transition-colors"
+                  className="register-link"
                 >
                   Register as new Reseller
                 </button>
