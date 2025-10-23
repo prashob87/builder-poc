@@ -31,6 +31,7 @@ export default function Footer() {
               "Anti-Bribery",
               "News",
               "Energy Labels",
+              "Data act",
             ].map((label, i, arr) => (
               <React.Fragment key={label}>
                 <a href="#" className="hover:underline focus:outline-none focus:ring-2 focus:ring-panasonic-blue rounded px-0.5">
