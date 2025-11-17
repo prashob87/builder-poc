@@ -36,9 +36,6 @@ export default function AccountData() {
     }
   };
 
-  const [newPassword, setNewPassword] = useState("");
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
 
 
 
@@ -163,6 +160,57 @@ export default function AccountData() {
                       </div>
                     </div>
 
+                    {/* Phone Number */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-black text-sm font-semibold font-[Arial]">Phone Number*</label>
+                      <input
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                        disabled={vatSaved}
+                        readOnly={vatSaved}
+                        className={`h-10 px-3 py-2 border-2 rounded-lg bg-white text-black text-sm font-[Arial] outline-none w-full transition-all ${
+                          vatSaved ? 'border-gray-300 cursor-not-allowed opacity-75' : 'border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                        }`}
+                        placeholder="e.g. +48 501234567"
+                      />
+                    </div>
+
+                    {/* Address */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-black text-sm font-semibold font-[Arial]">Address*</label>
+                      <textarea
+                        value={`${formData.street} ${formData.number}\n${formData.zipCode} ${formData.city}`}
+                        onChange={(e) => {
+                          const lines = e.target.value.split('\n');
+                          const firstLine = lines[0] || '';
+                          const secondLine = lines[1] || '';
+
+                          // Parse first line as street and number
+                          const streetParts = firstLine.trim().split(' ');
+                          const number = streetParts.pop() || '';
+                          const street = streetParts.join(' ');
+
+                          // Parse second line as zip and city
+                          const addressParts = secondLine.trim().split(' ');
+                          const zipCode = addressParts[0] || '';
+                          const city = addressParts.slice(1).join(' ');
+
+                          handleInputChange('street', street);
+                          handleInputChange('number', number);
+                          handleInputChange('zipCode', zipCode);
+                          handleInputChange('city', city);
+                        }}
+                        disabled={vatSaved}
+                        readOnly={vatSaved}
+                        rows={2}
+                        className={`px-3 py-2 border-2 rounded-lg bg-white text-black text-sm font-[Arial] outline-none w-full resize-none transition-all ${
+                          vatSaved ? 'border-gray-300 cursor-not-allowed opacity-75' : 'border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                        }`}
+                        placeholder="Street Number&#10;ZIP Code City"
+                      />
+                    </div>
+
                     {/* Save Button */}
                     <button
                       type="submit"
@@ -175,7 +223,7 @@ export default function AccountData() {
                       style={!vatSaved && !isVatValid ? { backgroundColor: 'rgba(249, 203, 58, 0.5)' } : {}}
                       disabled={vatSaved || !isVatValid}
                     >
-                      {vatSaved ? 'Saved' : isVatValid ? 'Save VAT' : 'Enter VAT to Save'}
+                      {vatSaved ? 'Saved' : isVatValid ? 'Save' : 'Enter VAT to Save'}
                     </button>
                     {vatSaved && (
                       <p className="text-xs text-black font-[Arial] mt-2">
@@ -191,6 +239,14 @@ export default function AccountData() {
                     <h3 className="text-black text-lg font-bold font-[Arial] text-blue-700">Contact Information</h3>
                   </div>
                   <div className="space-y-2">
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">First Name</span>
+                      <span className="text-black text-base font-[Arial]">Anna</span>
+                    </div>
+                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Last Name</span>
+                      <span className="text-black text-base font-[Arial]">Gallagher</span>
+                    </div>
                     <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
                       <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Email</span>
                       <span className="text-black text-base font-[Arial]">gallagher@domain.com</span>
@@ -217,12 +273,8 @@ export default function AccountData() {
                       <span className="text-black text-base font-bold font-[Arial]">Installation Corp. Inc.</span>
                     </div>
                     <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
-                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Company ID</span>
-                      <span className="text-black text-base font-[Arial]">1234567890</span>
-                    </div>
-                    <div className="flex flex-col group-hover:bg-white rounded p-1 transition-all">
-                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">Contact Person</span>
-                      <span className="text-black text-base font-[Arial]">Anna Gallagher</span>
+                      <span className="text-xs text-gray-500 font-[Arial] uppercase tracking-wide">VAT Number</span>
+                      <span className="text-black text-base font-[Arial]">DE 123456789</span>
                     </div>
                   </div>
                 </div>
@@ -258,150 +310,10 @@ export default function AccountData() {
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
                 
-                {/* Log in data */}
-                <div className="border border-gray-200 rounded-lg p-6 flex flex-col gap-5">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-black text-2xl font-bold font-[Arial] text-blue-700">Login Credentials</h3>
-                    <button
-                      type="button"
-                      aria-expanded={loginOpen}
-                      onClick={() => setLoginOpen((v) => !v)}
-                      aria-label="Toggle login credentials"
-                      className="p-1 rounded hover:bg-gray-100"
-                    >
-                      <svg className={`w-6 h-6 transition-transform ${loginOpen ? 'rotate-180' : ''}`} viewBox="0 0 25 25" fill="none">
-                        <path d="M6.83203 9.34058L12.832 15.3406L18.832 9.34058" stroke="#969C9F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </button>
-                  </div>
-
-                  {loginOpen && (
-                  <div className="flex gap-5">
-                    {/* Email Address */}
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-semibold font-[Arial] leading-6">Email Address*</label>
-                      <div className="h-11 px-3 py-6 bg-white border-2 border-gray-300 rounded-lg flex items-center transition-all hover:border-blue-300">
-                        <span className="text-[#969C9F] text-base font-[Arial]">anna.gallagher@domain.com</span>
-                      </div>
-                    </div>
-
-                    {/* New Password */}
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-semibold font-[Arial] leading-6">New Password*</label>
-                      <div className="h-11 px-3 py-6 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-between transition-all hover:border-blue-300">
-                        <input
-                          type={showNewPassword ? "text" : "password"}
-                          value={newPassword}
-                          onChange={(e) => setNewPassword(e.target.value)}
-                          className="flex-1 text-base text-black font-[Arial] outline-none bg-transparent"
-                        />
-                        <button
-                          type="button"
-                          aria-label={showNewPassword ? "Hide password" : "Show password"}
-                          onClick={() => setShowNewPassword((v) => !v)}
-                          className="text-panasonic-blue hover:text-panasonic-blue/90 focus:outline-none focus:ring-2 focus:ring-panasonic-blue rounded p-1"
-                        >
-                          {showNewPassword ? (
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          ) : (
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  )}
-                </div>
-
                 {/* Company Representative Section */}
                 <div className="border border-gray-200 rounded-lg p-6 flex flex-col gap-5">
                   <h3 className="text-black text-2xl font-bold font-[Arial] text-blue-700">Company Representative</h3>
 
-                  {/* Names */}
-                  <div className="flex gap-5">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">First Name*</label>
-                      <input
-                        type="text"
-                        value={formData.firstName}
-                        readOnly
-                        disabled
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none cursor-not-allowed"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">Last Name*</label>
-                      <input
-                        type="text"
-                        value={formData.lastName}
-                        readOnly
-                        disabled
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none cursor-not-allowed"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Company */}
-                  <div className="flex flex-col gap-2">
-                    <h3 className="text-black text-2xl font-bold font-[Arial]">Company Name*</h3>
-                    <div className="h-11 px-3 py-6 bg-white border-2 border-gray-300 rounded-lg flex items-center">
-                      <span className="text-[#969C9F] text-base font-[Arial]">Installer Corp. Inc.</span>
-                    </div>
-                  </div>
-
-
-                  {/* Address data */}
-                  <h3 className="text-black text-2xl font-bold font-[Arial]">Address data</h3>
-
-                  {/* Address */}
-                  <div className="flex gap-5">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">Street*</label>
-                      <input
-                        type="text"
-                        value={formData.street}
-                        onChange={(e) => handleInputChange('street', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">Number*</label>
-                      <input
-                        type="text"
-                        value={formData.number}
-                        onChange={(e) => handleInputChange('number', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  {/* ZIP, City */}
-                  <div className="flex gap-5">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">ZIP Code*</label>
-                      <input
-                        type="text"
-                        value={formData.zipCode}
-                        onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-2">
-                      <label className="text-black text-base font-[Arial] leading-6">City*</label>
-                      <input
-                        type="text"
-                        value={formData.city}
-                        onChange={(e) => handleInputChange('city', e.target.value)}
-                        className="h-11 px-3 py-6 border-2 border-gray-300 rounded-lg bg-white text-black text-base font-[Arial] outline-none"
-                      />
-                    </div>
-                  </div>
 
                   {/* Country and Phone */}
                   <div className="flex gap-5">

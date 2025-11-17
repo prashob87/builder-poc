@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { createEmbeddedCheckoutSession, getSessionStatus } from "./routes/stripe";
+import { loginHandler } from "./routes/auth";
 
 export function createServer() {
   const app = express();
@@ -19,6 +20,7 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+  app.post("/api/login", loginHandler);
 
   // Stripe Embedded Checkout endpoints
   app.post("/api/stripe/create-checkout-session", createEmbeddedCheckoutSession);
